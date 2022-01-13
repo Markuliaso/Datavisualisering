@@ -1,0 +1,65 @@
+import csv
+import matplotlib.pyplot as plt
+
+#https://www.geeksforgeeks.org/visualize-data-from-csv-file-in-python/
+
+today = []
+datoer = []
+Grader1 = []
+Grader2 = []
+Grader3 = []
+d=0
+
+
+with open('weather_data_filtered.csv','r') as csvfile:
+    lines = csv.reader(csvfile, delimiter = ',')
+    next(lines)
+    for row in lines:
+        today.append(float(row[1]))
+        d += 1
+        if d ==24:
+
+            Grader1.append(sum(today) / 24.0)
+            datoer.append(row[0][5:10])
+            today=[]
+            d=0
+
+with open('weather_data_filtered (1).csv','r') as csvfile:
+    lines = csv.reader(csvfile, delimiter = ',')
+    next(lines)
+    for row in lines:
+        today.append(float(row[2]))
+        d += 1
+        if d ==24:
+
+            Grader2.append(sum(today) / 24.0)
+            today=[]
+            d=0
+
+with open('weather_data_filtered (2).csv','r') as csvfile:
+    lines = csv.reader(csvfile, delimiter = ',')
+    next(lines)
+    for row in lines:
+        today.append(float(row[1]))
+        d += 1
+        if d ==24:
+
+            Grader3.append(sum(today) / 24.0)
+            today=[]
+            d=0
+
+
+plt.plot(datoer, Grader1, color='b', linestyle='solid',
+         marker='o', label="DK 2001")
+plt.plot(datoer, Grader2, color='r', linestyle='dotted',
+         marker='o', label="Kurwa jebany")
+plt.plot(datoer, Grader3, color='g', linestyle='solid',
+         marker='o', label="DK 2003")
+
+plt.xticks(rotation=25, fontsize=10)
+plt.xlabel('Dates', fontweight='bold')
+plt.ylabel('Temperature(°C)',fontweight='bold', fontsize='17')
+plt.title('Weather Report', fontsize=20, fontweight='heavy')
+plt.grid()
+plt.legend()
+plt.show()
