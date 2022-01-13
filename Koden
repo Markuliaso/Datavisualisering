@@ -3,28 +3,28 @@ import matplotlib.pyplot as plt
 
 #https://www.geeksforgeeks.org/visualize-data-from-csv-file-in-python/
 
-today = []
-datoer = []
-Grader1 = []
-Grader2 = []
-Grader3 = []
-d=0
+today = [] #En liste til at samle hver dags temperatur for at finde gennemsnittet for dagen. 
+datoer = [] #Listen over datoerne der vises på x-aksen
+Grader1 = [] #Den gennemsnitslige temperatur for første graf
+Grader2 = [] #Den gennemsnitslige temperatur for anden graf
+Grader3 = [] #Den gennemsnitslige temperatur for tredje graf
+d=0 
 
 
-with open('weather_data_filtered.csv','r') as csvfile:
-    lines = csv.reader(csvfile, delimiter = ',')
-    next(lines)
+with open('weather_data_filtered.csv','r') as csvfile: #CSV filen kaldes og åbnes
+    lines = csv.reader(csvfile, delimiter = ',') #Vi laver CSV filen om til et objekt der kan bruges i koden
+    next(lines) #her springer vi over headeren
     for row in lines:
-        today.append(float(row[1]))
-        d += 1
-        if d ==24:
+        today.append(float(row[1])) #Her tilføjer vi det data fra CSV filen vi skal bruge i grafen.
+        d += 1 
+        if d ==24: #Bruges til at tælle hvornår en ny dag starter, så vi kan finde today.
 
-            Grader1.append(sum(today) / 24.0)
-            datoer.append(row[0][5:10])
-            today=[]
-            d=0
+            Grader1.append(sum(today) / 24.0) #Her tiltøjer vi summen af today til graderne i grafen og finder dagens gennemsnit.
+            datoer.append(row[0][5:10]) #Her springer vi de første 6 cifre over i datoen, for at årstallet ikke bliver vist i grafen.
+            today=[] #dataen fra today bliver slettet, og vi begynder på en ny dag.
+            d=0 
 
-with open('weather_data_filtered (1).csv','r') as csvfile:
+with open('weather_data_filtered (1).csv','r') as csvfile: #Vi gentager det vi lige har brugt, i en ny csv fil.
     lines = csv.reader(csvfile, delimiter = ',')
     next(lines)
     for row in lines:
@@ -36,7 +36,7 @@ with open('weather_data_filtered (1).csv','r') as csvfile:
             today=[]
             d=0
 
-with open('weather_data_filtered (2).csv','r') as csvfile:
+with open('weather_data_filtered (2).csv','r') as csvfile: #Vi gentager det vi lige har brugt, i en ny csv fil.
     lines = csv.reader(csvfile, delimiter = ',')
     next(lines)
     for row in lines:
@@ -49,17 +49,17 @@ with open('weather_data_filtered (2).csv','r') as csvfile:
             d=0
 
 
-plt.plot(datoer, Grader1, color='b', linestyle='solid',
-         marker='o', label="DK 2001")
-plt.plot(datoer, Grader2, color='r', linestyle='dotted',
-         marker='o', label="Kurwa jebany")
+plt.plot(datoer, Grader1, color='b', linestyle='solid', #Her plottes dataen til de forskellige grafer ind i ét koordinatsystem.
+         marker='o', label="DK 2001")                   #vi tilføjer koncis titel i form af attributes, "linjetype", "labels" og punktform. 
+plt.plot(datoer, Grader2, color='r', linestyle='dotted', 
+         marker='o', label="Polen 2001")
 plt.plot(datoer, Grader3, color='g', linestyle='solid',
          marker='o', label="DK 2003")
 
-plt.xticks(rotation=25, fontsize=10)
-plt.xlabel('Dates', fontweight='bold')
-plt.ylabel('Temperature(°C)',fontweight='bold', fontsize='17')
-plt.title('Weather Report', fontsize=20, fontweight='heavy')
-plt.grid()
-plt.legend()
-plt.show()
+plt.xticks(rotation=25, fontsize=10) #vi roterer og bestemmer størrelsen af x-koordinaternes datatitler.
+plt.xlabel('Dates', fontweight='bold') #vi giver x-aksen en titel og bestemmer skriftypens vægt.
+plt.ylabel('Temperature(°C)',fontweight='bold', fontsize='17') #vi giver y-aksen en titel og bestemmer skriftypens vægt samt skriftstørrelsen. 
+plt.title('Weather Report', fontsize=20, fontweight='heavy') #her giver vi grafen en titel
+plt.grid() #her laver vi gitteret i grafen
+plt.legend() #fremviser vores koncistitler i grafen.
+plt.show() #her får vi programmet til at fremvise grafen.
